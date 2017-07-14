@@ -8,8 +8,9 @@ body{
     min-height: 100px;
     position: absolute;
     left: 0;
-    top: 0;
+    top: 35;
     border: 2px solid #ffd700;
+    border-radius: 2px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     padding-top: 20px;
 }
@@ -29,7 +30,32 @@ body{
     min-height: 100px;
     background: transparent;
     border: none;
+    outline: none;
 }
-.sticker_bar{
+.sticker:hover{
+    z-index: 1;
+}
+.sticker_bar:hover {
     cursor: move;
+    background: #ffe500;
+}
+.sticker_add{
+    background: #808080;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    width: 170px;
+    margin-left: -85px;
+    height: 45px;
+    border-radius: 2px;
+    border: 2px solid #ffd700;
+    outline: none;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    z-index: 2;
+}
+.sticker_add:hover{
+    cursor: pointer;
+    background: #898989;
 }
