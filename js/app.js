@@ -13,6 +13,13 @@
     let createElement;
     let addNewStickerBtn;
 
+    let init;
+    let testLocalStorage;
+
+    let saveNote;
+    let deleteNote;
+    let loadNotes;
+
 
     onDragStart = function ( event ) {
         let boundingClientRect;
@@ -34,7 +41,7 @@
         if ( !draggedEl ) {
             return;
         }
-        console.log(draggedEl);
+
         let posX = event.clientX + coordinateX;
         let posY = event.clientY + coordinateY;
 
@@ -50,11 +57,31 @@
         coordinateY = null;
     };
 
-    createElement = function (){
+    createElement = function () {
 
         let sticker = document.createElement('div');
         let bar = document.createElement('div');
         let textarea = document.createElement('textarea');
+        let saveBtn = document.createElement('button');
+        let deleteBtn = document.createElement('button');
+        let onSave;
+        let onDelete;
+
+        onDelete = function () {
+            let obj = {};
+            deleteNote(obj);
+        };
+
+        onSave = function () {
+            let obj = {};
+            saveNote(obj);
+        };
+
+        saveBtn.addEventListener('click', onSave);
+        deleteBtn.addEventListener('click', onDelete);
+
+        saveBtn.classList.add('saveButton');
+        deleteBtn.classList.add('deleteButton');
 
         let positionNewSticker = `translateX(${Math.random() * 300}px) translateY(${Math.random() * 300}px)`;
 
@@ -64,6 +91,9 @@
         bar.classList.add('sticker_bar');
         textarea.classList.add('sticker_textarea');
 
+        bar.appendChild(saveBtn);
+        bar.appendChild(deleteBtn);
+
         sticker.appendChild(bar);
         sticker.appendChild(textarea);
 
@@ -72,11 +102,44 @@
         document.body.appendChild(sticker);
     };
 
-    createElement();
+    testLocalStorage = function () {
+        let foo = 'foo';
+        try {
+            localStorage.setItem(foo, foo);
+            localStorage.removeItem(foo);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    };
 
-    addNewStickerBtn = document.querySelector('.sticker_add');
-    addNewStickerBtn.addEventListener('click', createElement, false);
-    document.addEventListener('mousemove', onDrag, false);
-    document.addEventListener('mouseup', onDragEnd, false);
+    init = function () {
+
+        if ( !testLocalStorage() ) {
+            var message = "Cannot use localStorage";
+        } else {
+            saveNote = function (note) {
+                // notatka
+            };
+
+            deleteNote = function (note) {
+                // usuniemy notatkę
+            };
+
+            loadNotes = function () {
+                // ładowanie notatek
+            };
+
+            loadNotes();
+        }
+        addNewStickerBtn = document.querySelector('.sticker_add');
+        addNewStickerBtn.addEventListener('click', createElement, false);
+        document.addEventListener('mousemove', onDrag, false);
+        document.addEventListener('mouseup', onDragEnd, false);
+    };
+
+    init();
+
+
 
 })();
