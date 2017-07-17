@@ -21,7 +21,7 @@
     let loadNotes;
 
     let getNoteObject;
-    
+    let onAddNoteBtnClick;
 
     onDragStart = function ( event ) {
         let boundingClientRect;
@@ -80,7 +80,7 @@
         let BOUNDARIES = 300;
         let noteConfig = options || {
             content : '',
-            id : "sticker_" + new Data().getTime(),
+            id : "sticker_" + new Date().getTime(),
             transformCSSValue : `translateX(${Math.random() * 300}px) translateY(${Math.random() * 300}px)`,
         };
 
@@ -129,6 +129,10 @@
         }
     };
 
+    onAddNoteBtnClick = function () {
+        createElement()
+    };
+
     init = function () {
 
         if ( !testLocalStorage() ) {
@@ -150,7 +154,7 @@
             loadNotes();
         }
         addNewStickerBtn = document.querySelector('.sticker_add');
-        addNewStickerBtn.addEventListener('click', createElement, false);
+        addNewStickerBtn.addEventListener('click', onAddNoteBtnClick, false);
         document.addEventListener('mousemove', onDrag, false);
         document.addEventListener('mouseup', onDragEnd, false);
     };
