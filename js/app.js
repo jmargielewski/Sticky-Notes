@@ -20,6 +20,8 @@
     let deleteNote;
     let loadNotes;
 
+    let getNoteObject;
+    
 
     onDragStart = function ( event ) {
         let boundingClientRect;
@@ -57,7 +59,16 @@
         coordinateY = null;
     };
 
-    createElement = function () {
+    getNoteObject = function (el) {
+        let textarea = el.querySelector('textarea');
+        return {
+            content : textarea.value,
+            id : el.id,
+            transformCSSValue : el.style.transform,
+        };
+    };
+
+    createElement = function (options) {
 
         let sticker = document.createElement('div');
         let bar = document.createElement('div');
@@ -66,6 +77,12 @@
         let deleteBtn = document.createElement('button');
         let onSave;
         let onDelete;
+        let BOUNDARIES = 300;
+        let noteConfig = options || {
+            content : '',
+            id : "sticker_" + new Data().getTime(),
+            transformCSSValue : `translateX(${Math.random() * 300}px) translateY(${Math.random() * 300}px)`,
+        };
 
         onDelete = function () {
             let obj = {};
@@ -73,8 +90,9 @@
         };
 
         onSave = function () {
-            let obj = {};
-            saveNote(obj);
+            saveNote(
+                getNoteObject(stickerEl)
+            );
         };
 
         saveBtn.addEventListener('click', onSave);
@@ -83,9 +101,7 @@
         saveBtn.classList.add('saveButton');
         deleteBtn.classList.add('deleteButton');
 
-        let positionNewSticker = `translateX(${Math.random() * 300}px) translateY(${Math.random() * 300}px)`;
-
-        sticker.style.transform = positionNewSticker;
+        sticker.style.transform = noteConfig.transformCSSValue;
 
         sticker.classList.add('sticker');
         bar.classList.add('sticker_bar');
@@ -119,6 +135,7 @@
             var message = "Cannot use localStorage";
         } else {
             saveNote = function (note) {
+                localStorage.setItem(note.id, note);
                 // notatka
             };
 
