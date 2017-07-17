@@ -91,9 +91,12 @@
 
         onSave = function () {
             saveNote(
-                getNoteObject(stickerEl)
+                getNoteObject(sticker)
             );
         };
+
+        sticker.id = noteConfig.id;
+        textarea.value = noteConfig.content;
 
         saveBtn.addEventListener('click', onSave);
         deleteBtn.addEventListener('click', onDelete);
@@ -139,7 +142,7 @@
             var message = "Cannot use localStorage";
         } else {
             saveNote = function (note) {
-                localStorage.setItem(note.id, note);
+                localStorage.setItem(note.id, JSON.stringify(note));
                 // notatka
             };
 
@@ -148,7 +151,14 @@
             };
 
             loadNotes = function () {
-                // ładowanie notatek
+                for (let i = 0; i < localStorage.length; i++) {
+                    let noteObject = JSON.parse(
+                        localStorage.getItem(
+                            localStorage.key(i)
+                        )
+                    );
+                    createElement(noteObject);
+                }
             };
 
             loadNotes();
