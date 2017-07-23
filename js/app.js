@@ -65,6 +65,10 @@
             content : textarea.value,
             id : el.id,
             transformCSSValue : el.style.transform,
+            textarea : {
+                width : textarea.style.width,
+                height : textarea.style.height,
+            },
         };
     };
 
@@ -80,7 +84,7 @@
         let BOUNDARIES = 300;
         let noteConfig = options || {
             content : '',
-            id : "sticker_" + new Date().getTime(),
+            id : 'sticker_' + new Date().getTime(),
             transformCSSValue : `translateX(${Math.random() * 300}px) translateY(${Math.random() * 300}px)`,
         };
 
@@ -94,6 +98,12 @@
                 getNoteObject(sticker)
             );
         };
+
+        if ( noteConfig.textarea ){
+            textarea.style.width = noteConfig.textarea.width;
+            textarea.style.height = noteConfig.textarea.height;
+            textarea.style.resize = 'none';
+        }
 
         sticker.id = noteConfig.id;
         textarea.value = noteConfig.content;
