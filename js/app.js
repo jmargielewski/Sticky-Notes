@@ -25,7 +25,7 @@
 
     onDragStart = function ( event ) {
         let boundingClientRect;
-        if ( event.target.className.indexOf('sticker_bar' ) === -1){
+        if ( event.target.className.indexOf( 'sticker_bar' ) === -1 ){
             return;
         }
         draggedEl = this;
@@ -89,8 +89,10 @@
         };
 
         onDelete = function () {
-            let obj = {};
-            deleteNote(obj);
+            deleteNote(
+                getNoteObject(sticker)
+            );
+            document.body.removeChild(sticker);
         };
 
         onSave = function () {
@@ -149,15 +151,20 @@
     init = function () {
 
         if ( !testLocalStorage() ) {
-            var message = "Cannot use localStorage";
+            let message = 'Cannot use localStorage';
+            saveNote = function () {
+                console.warn(message);
+            };
+            deleteNote = function () {
+                console.warn(message);
+            };
         } else {
             saveNote = function (note) {
                 localStorage.setItem(note.id, JSON.stringify(note));
-                // notatka
             };
 
             deleteNote = function (note) {
-                // usuniemy notatkę
+                localStorage.removeItem(note.id);
             };
 
             loadNotes = function () {
@@ -180,7 +187,5 @@
     };
 
     init();
-
-
 
 })();
